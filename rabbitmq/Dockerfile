@@ -16,8 +16,8 @@ ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
     RABBITMQ_SASL_LOGS=-
 
 RUN set -xe && \
-    curl -LO https://github.com/rabbitmq/erlang-rpm/releases/download/v${ERLANG_VERSION}/erlang-${ERLANG_VERSION}-1.el7.centos.x86_64.rpm && \
-    rpm -Uvh ./erlang-${ERLANG_VERSION}-1.el7.centos.x86_64.rpm && \
+    curl -LO https://github.com/rabbitmq/erlang-rpm/releases/download/v${ERLANG_VERSION}/erlang-${ERLANG_VERSION}-1.el7.x86_64.rpm && \
+    rpm -Uvh ./erlang-${ERLANG_VERSION}-1.el7.x86_64.rpm && \
     rm *.rpm && \
     curl -Lo rabbitmq-server.tar.xz https://www.rabbitmq.com/releases/rabbitmq-server/v${RABBITMQ_VERSION}/rabbitmq-server-generic-unix-${RABBITMQ_VERSION}.tar.xz && \
     curl -Lo rabbitmq-server.tar.xz.asc https://www.rabbitmq.com/releases/rabbitmq-server/v${RABBITMQ_VERSION}/rabbitmq-server-generic-unix-${RABBITMQ_VERSION}.tar.xz.asc && \
