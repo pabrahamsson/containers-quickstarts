@@ -1,14 +1,14 @@
-FROM rhel:7.4
+FROM rhel:7.6
 
-ARG ERLANG_VERSION=20.1.1
+ARG ERLANG_VERSION=21.3.3
 ARG RABBITMQ_AUTOCLUSTER_VERSION=0.10.0
-ARG RABBITMQ_VERSION=3.6.12
+ARG RABBITMQ_VERSION=3.7.14
 
 LABEL io.k8s.description="Lightweight open source message broker" \
     io.k8s.display-name="RabbitMQ" \
     io.openshift.expose-services="4369:epmd, 5671:amqp, 5672:amqp, 25672:http" \
     io.openshift.tags="rabbitmq"
-    
+
 ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
     HOME=/var/lib/rabbitmq \
     RABBITMQ_HOME=/opt/rabbitmq \

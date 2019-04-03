@@ -13,17 +13,17 @@ items:
     - annotations: null
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/rhel7/rhel:7.3
+        name: registry.access.redhat.com/rhel7/rhel:7.4
       importPolicy: {}
-      name: "7.3"
+      name: "7.4"
       referencePolicy:
         type: Source
     - annotations: null
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/rhel7/rhel:7.4
+        name: registry.access.redhat.com/rhel7/rhel:7.6
       importPolicy: {}
-      name: "7.4"
+      name: "7.6"
       referencePolicy:
         type: Source
     - annotations: null
