@@ -1,4 +1,4 @@
-FROM docker.io/sonarqube:latest
+FROM docker.io/sonarqube:7.7-community
 
 USER root
 ADD sonar.properties /opt/sonarqube/conf/sonar.properties
