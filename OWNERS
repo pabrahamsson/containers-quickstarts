@@ -1,0 +1,15 @@
+# See the OWNERS docs at https://go.k8s.io/owners
+
+filters:
+  ".*":
+    reviewers:
+      - etsauer
+      - oybed
+      - pcarney8
+      - pabrahamsson
+    approvers:
+      - etsauer
+      - oybed
+      - pcarney8
+      - pabrahamsson
+      
