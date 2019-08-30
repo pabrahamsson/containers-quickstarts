@@ -44,6 +44,7 @@ openshift_cluster_content:
       NAMESPACE_DISPLAY_NAME: "{{ namespace }}"
     tags:
       - project
+# A comment
 #- object: jenkins-ephemeral
 #  content:
 #  - name: jenkins-ephemeral
