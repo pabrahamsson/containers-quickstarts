@@ -44,14 +44,13 @@ openshift_cluster_content:
       NAMESPACE_DISPLAY_NAME: "{{ namespace }}"
     tags:
       - project
-# A comment
-#- object: jenkins-ephemeral
-#  content:
-#  - name: jenkins-ephemeral
-#    template: 'openshift//jenkins-ephemeral'
-#    namespace: "{{ namespace }}"
-#    tags:
-#      - jenkins-ephemeral
+- object: jenkins-ephemeral
+  content:
+  - name: jenkins-ephemeral
+    template: 'openshift//jenkins-ephemeral'
+    namespace: "{{ namespace }}"
+    tags:
+      - jenkins-ephemeral
 - object: jenkins-slave-nodes
   content:
   - name: jenkins-slaves
