@@ -30,6 +30,9 @@ applier() {
   echo "${TRAVIS_REPO_SLUG}"
   ansible-galaxy install -r requirements.yml -p galaxy --force
   ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml -e namespace=${NAMESPACE} -e slave_repo_ref=${TRAVIS_BRANCH} -e repository_url=https://github.com/${TRAVIS_REPO_SLUG}.git
+  if [ -n ${TRAVIS_BUILD_ID} ]; then
+    oc patch dc jenkins -p '{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","metadata":{"name":"jenkins"},"spec":{"template":{"spec":{"containers":[{"name":"jenkins","resources":{"limits":{"cpu":"1000m"},"requests":{"cpu":"512m"}}}]}}}}' -n ${NAMESPACE}
+  fi
 }
 
 get_build_phases() {
