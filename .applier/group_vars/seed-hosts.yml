@@ -54,6 +54,8 @@ openshift_cluster_content:
   content:
   - name: jenkins-ephemeral
     template: 'openshift//jenkins-ephemeral'
+    params_from_vars:
+      MEMORY_LIMIT: 2Gi
     namespace: "{{ namespace }}"
     tags:
       - jenkins-ephemeral
