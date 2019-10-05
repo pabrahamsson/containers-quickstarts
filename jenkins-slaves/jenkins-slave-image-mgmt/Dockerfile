@@ -19,7 +19,7 @@ RUN INSTALL_PKGS="curl gcc make gpgme-devel libassuan-devel btrfs-progs-devel de
     cd /src/github.com/containers/skopeo && \
     make binary-local
 
-FROM registry.access.redhat.com/ubi/ubi7
+FROM registry.access.redhat.com/ubi7/ubi
 USER root
 COPY --from=builder /src/github.com/containers/skopeo/skopeo /usr/local/bin/skopeo
 USER 1001
