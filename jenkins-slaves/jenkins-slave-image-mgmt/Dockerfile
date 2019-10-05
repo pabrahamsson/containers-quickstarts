@@ -17,9 +17,9 @@ RUN INSTALL_PKGS="curl gcc make gpgme-devel libassuan-devel btrfs-progs-devel de
     tar zxf v${SKOPEO_VERSION}.tar.gz -C /src/github.com/containers && \
     ln -s /src/github.com/containers/skopeo-${SKOPEO_VERSION} /src/github.com/containers/skopeo && \
     cd /src/github.com/containers/skopeo && \
-    make binary-local
+    make binary-local-static
 
-FROM registry.access.redhat.com/ubi7/ubi
+FROM quay.io/openshift/origin-jenkins-agent-base:4.1
 USER root
 COPY --from=builder /src/github.com/containers/skopeo/skopeo /usr/local/bin/skopeo
 USER 1001
