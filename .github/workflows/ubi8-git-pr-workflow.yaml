@@ -1,13 +1,15 @@
 name: ubi8-git-pr-ci
+env:
+  CONTEXT: ubi8-git
+  YQ_VERSION: 3.2.1
 on:
   pull_request:
     paths:
-      - ubi8-git/version.yaml
+      - ${CONTEXT}/**
 jobs:
   build:
-    env:
-      CONTEXT: ubi8-git
-      YQ_VERSION: 3.2.1
+    # Only build on redhat-cop repo, do not attempt to build on forks
+    if: github.repository == 'pabrahamsson/containers-quickstarts'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
