@@ -1,6 +1,8 @@
 name: ubi8-git-publish-workflow
 on:
   push:
+    branches:
+      - master
     paths:
       - ubi8-git/version.yaml
 jobs:
