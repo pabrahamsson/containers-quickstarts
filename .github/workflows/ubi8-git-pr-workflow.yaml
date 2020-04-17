@@ -1,0 +1,24 @@
+name: ubi8-git-pr-ci
+on:
+  pull_request:
+    paths:
+      - ubi8-git/version.yaml
+jobs:
+  build:
+    env:
+      CONTEXT: ubi8-git
+      YQ_VERSION: 3.2.1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check and verify version.yaml
+        id: check_version
+        run: |
+          curl -Lo yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
+          chmod +x yq
+          echo -n ::set-output name=IMAGE_TAG::
+          echo $(./yq r ${CONTEXT}/version.yaml 'version')
+      - name: Build image and test image
+        run: |
+          docker build -f ${CONTEXT}/Dockerfile -t ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} ${CONTEXT}
+          docker run ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} git --version
