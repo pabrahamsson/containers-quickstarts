@@ -5,7 +5,7 @@ env:
 on:
   pull_request:
     paths:
-      - ubi8-git/**
+      - ${{ env.CONTEXT }}/**
 jobs:
   build:
     # Only build on redhat-cop repo, do not attempt to build on forks
@@ -22,5 +22,7 @@ jobs:
           echo $(./yq r ${CONTEXT}/version.yaml 'version')
       - name: Build image and test image
         run: |
+          echo "Running: docker build -f ${CONTEXT}/Dockerfile -t ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} ${CONTEXT}"
           docker build -f ${CONTEXT}/Dockerfile -t ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} ${CONTEXT}
+          echo "Running: docker run ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} git --version"
           docker run ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} git --version
