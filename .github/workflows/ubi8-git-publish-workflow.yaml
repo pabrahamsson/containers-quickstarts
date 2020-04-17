@@ -13,10 +13,10 @@ jobs:
       - name: Get image tags
         id: image_tags
         run: |
-          curl -Lo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
-          chmod +x /usr/local/bin/yq
+          curl -Lo yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
+          chmod +x yq
           echo -n ::set-output name=IMAGE_TAG::
-          echo $(yq r ubi8-git/version.yaml 'version')
+          echo $(./yq r ubi8-git/version.yaml 'version')
       - name: Build and publish image to Quay
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
