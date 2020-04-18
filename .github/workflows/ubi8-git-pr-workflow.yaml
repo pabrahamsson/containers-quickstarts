@@ -1,28 +1,25 @@
 name: ubi8-git-pr-ci
-env:
-  CONTEXT: ubi8-git
-  YQ_VERSION: 3.2.1
 on:
   pull_request:
     paths:
       - ubi8-git/**
 jobs:
   build:
+    env:
+      context: ubi8-git
     # Only build on redhat-cop repo, do not attempt to build on forks
     if: github.repository == 'pabrahamsson/containers-quickstarts'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Check and verify version.yaml
+      - name: Check and verify version.json
         id: check_version
         run: |
-          curl -Lo yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
-          chmod +x yq
-          echo -n ::set-output name=IMAGE_TAG::
-          echo $(./yq r ${CONTEXT}/version.yaml 'version')
+          echo -n ::set-output name=IMAGE_TAGS::
+          echo $(jq -r '.version' ${context}/version.json)
       - name: Build image and test image
         run: |
-          echo "Running: docker build -f ${CONTEXT}/Dockerfile -t ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} ${CONTEXT}"
-          docker build -f ${CONTEXT}/Dockerfile -t ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} ${CONTEXT}
-          echo "Running: docker run ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} git --version"
-          docker run ${CONTEXT}:${{ steps.check_version.outputs.IMAGE_TAG }} git --version
+          echo "Running: docker build -f ${context}/Dockerfile -t ${context}:${{ steps.check_version.outputs.IMAGE_TAGS }} ${context}"
+          docker build -f ${context}/Dockerfile -t ${context}:${{ steps.check_version.outputs.IMAGE_TAGS }} ${context}
+          echo "Running: docker run ${context}:${{ steps.check_version.outputs.IMAGE_TAGS }} git --version"
+          docker run ${context}:${{ steps.check_version.outputs.IMAGE_TAGS }} git --version
