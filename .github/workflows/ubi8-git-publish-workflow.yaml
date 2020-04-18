@@ -23,6 +23,7 @@ jobs:
             echo latest
           else
             echo "latest,${VERSION}"
+          fi
       - name: Build and publish image to Quay
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
