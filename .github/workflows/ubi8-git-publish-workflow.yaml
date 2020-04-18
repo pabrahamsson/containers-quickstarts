@@ -26,10 +26,10 @@ jobs:
       - name: Build and publish image to Quay
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: pabrahamsson/${{ context }}
+          name: pabrahamsson/${{ env.context }}
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
           registry: quay.io
           tags: "${{ steps.image_tags.outputs.IMAGE_TAGS }}"
-          dockerfile: ${{ context }}/Dockerfile
-          context: ${{ context }}
+          dockerfile: ${{ env.context }}/Dockerfile
+          context: ${{ env.context }}
