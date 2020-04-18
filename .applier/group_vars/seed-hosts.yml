@@ -1,4 +1,5 @@
 ---
+# A comment:
 namespace: jenkins-slaves
 repository_url: https://github.com/redhat-cop/containers-quickstarts.git
 slave_repo_ref: master
