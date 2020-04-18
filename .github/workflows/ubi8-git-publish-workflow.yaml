@@ -4,9 +4,11 @@ on:
     branches:
       - master
     paths:
-      - ubi8-git/version.yaml
+      - ubi8-git/version.json
 jobs:
   build:
+    env:
+      context: ubi8-git
     # Only build on redhat-cop repo, do not attempt to build on forks
     if: github.repository == 'pabrahamsson/containers-quickstarts'
     runs-on: ubuntu-latest
@@ -15,17 +17,19 @@ jobs:
       - name: Get image tags
         id: image_tags
         run: |
-          curl -Lo yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
-          chmod +x yq
-          echo -n ::set-output name=IMAGE_TAG::
-          echo $(./yq r ubi8-git/version.yaml 'version')
+          echo -n ::set-output name=IMAGE_TAGS::
+          VERSION=$(jq -r '.version' ${context}/version.json)
+          if [ "${VERSION}" == "latest"]; then
+            echo latest
+          else
+            echo "latest,${VERSION}"
       - name: Build and publish image to Quay
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: pabrahamsson/ubi8-git
+          name: pabrahamsson/${{ context }}
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
           registry: quay.io
-          tags: "latest,${{ steps.image_tags.outputs.IMAGE_TAG }}"
-          dockerfile: ubi8-git/Dockerfile
-          context: ubi8-git
+          tags: "${{ steps.image_tags.outputs.IMAGE_TAGS }}"
+          dockerfile: ${{ context }}/Dockerfile
+          context: ${{ context }}
