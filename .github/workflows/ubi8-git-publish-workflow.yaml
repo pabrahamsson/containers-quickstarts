@@ -1,0 +1,36 @@
+name: ubi8-git-publish-workflow
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ubi8-git/version.json
+jobs:
+  build:
+    env:
+      context: ubi8-git
+    # Only build on redhat-cop repo, do not attempt to build on forks
+    if: github.repository == 'pabrahamsson/containers-quickstarts'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Get image tags
+        id: image_tags
+        run: |
+          echo -n ::set-output name=IMAGE_TAGS::
+          VERSION=$(jq -r '.version' ${context}/version.json)
+          if [ "${VERSION}" == "latest"]; then
+            echo latest
+          else
+            echo "latest,${VERSION}"
+          fi
+      - name: Build and publish image to Quay
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: pabrahamsson/${{ env.context }}
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+          registry: quay.io
+          tags: "${{ steps.image_tags.outputs.IMAGE_TAGS }}"
+          dockerfile: ${{ env.context }}/Dockerfile
+          context: ${{ env.context }}
