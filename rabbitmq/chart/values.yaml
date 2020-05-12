@@ -5,7 +5,7 @@
 replicaCount: 3
 
 image:
-  repository: quay.io/pabrahamsson/rabbitmq
+  repository: quay.io/redhat-cop/rabbitmq
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
