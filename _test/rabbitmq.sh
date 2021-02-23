@@ -93,7 +93,7 @@ test() {
   then
     prom_status=$(curl -s -o /dev/null -w "%{http_code}" http://rabbitmq.${NAMESPACE}.svc:15692/metrics)
   else
-    prom_status=$(oc -n $NAMESPACE rsh rabbitmq-0 curl -s -o /dev/null -w "%{http_code}" http://localhost:15693/metrics)
+    prom_status=$(oc -n $NAMESPACE rsh rabbitmq-0 curl -s -o /dev/null -w "%{http_code}" http://localhost:15692/metrics)
   fi
   if [ $prom_status == "200" ]
   then
