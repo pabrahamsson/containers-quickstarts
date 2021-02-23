@@ -51,6 +51,17 @@ setup_file() {
   [ "${cluster_replicas}" == "3" ]
 }
 
+@test "rabbitmq/ha: should start prometheus endpoint" {
+  # RabbitMQ prometheus
+  if [ -d /run/secrets/kubernetes.io/serviceaccount ]
+  then
+    local prom_status=$(curl -s -o /dev/null -w "%{http_code}" http://rabbitmq.rabbitmq-acceptance-${JOB_ID}.svc:15692/metrics)
+  else
+    local prom_status=$(oc rsh "$(name_prefix)-0" -- curl -s -o /dev/null -w "%{http_code}" http://localhost:15693/metrics)
+  fi
+  [ "${prom_status}" == "200" ]
+}
+
 # Clean up
 teardown_file() {
   if [[ ${CLEANUP:-true} == "true" ]]
