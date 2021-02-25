@@ -2,7 +2,7 @@
 
 JOB_ID=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -1)
 
-load _helpers
+load _helpers.bash
 
 setup_file() {
   cd $(chart_dir)
@@ -57,7 +57,7 @@ setup_file() {
   then
     local prom_status=$(curl -s -o /dev/null -w "%{http_code}" http://rabbitmq.rabbitmq-acceptance-${JOB_ID}.svc:15692/metrics)
   else
-    local prom_status=$(oc rsh "$(name_prefix)-0" -- curl -s -o /dev/null -w "%{http_code}" http://localhost:15693/metrics)
+    local prom_status=$(oc exec "$(name_prefix)-0" -- curl -s -o /dev/null -w "%{http_code}" http://localhost:15692/metrics)
   fi
   [ "${prom_status}" == "200" ]
 }
