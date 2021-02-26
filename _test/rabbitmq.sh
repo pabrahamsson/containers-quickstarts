@@ -88,13 +88,7 @@ test() {
   fi
 
   echo "Check if RabbitMQ prometheus is running..."
-  # Are we running in a pod
-  if [ -d /run/secrets/kubernetes.io/serviceaccount ]
-  then
-    prom_status=$(curl -s -o /dev/null -w "%{http_code}" http://rabbitmq.${NAMESPACE}.svc:15692/metrics)
-  else
-    prom_status=$(oc -n $NAMESPACE rsh rabbitmq-0 curl -s -o /dev/null -w "%{http_code}" http://localhost:15692/metrics)
-  fi
+  prom_status=$(oc -n $NAMESPACE rsh rabbitmq-0 curl -s -o /dev/null -w "%{http_code}" http://localhost:15692/metrics)
   if [ $prom_status == "200" ]
   then
     echo "OK: promethues is running on port 15692"
