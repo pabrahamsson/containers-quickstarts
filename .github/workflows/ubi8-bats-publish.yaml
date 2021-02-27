@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - master-actions-testing
     tags:
       - '*'
     paths:
