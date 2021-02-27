@@ -61,3 +61,18 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create anti-affinity rules
+*/}}
+{{- define "chart.antiAffinityRules" -}}
+podAntiAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+  - labelSelector:
+      matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+        - {{ include "chart.name" . }}
+    topologyKey: kubernetes.io/hostname
+{{- end -}}

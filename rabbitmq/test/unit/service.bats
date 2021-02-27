@@ -18,11 +18,11 @@ load _helpers
 }
 
 # ports
-@test "service: two default ports" {
+@test "service: default number of ports" {
   cd $(chart_dir)
   local service_ports=$(helm template -s templates/service.yaml \
   . | yq r - --length 'spec.ports')
-  [ ${service_ports} -eq 2 ]
+  [ ${service_ports} -eq 3 ]
 }
 
 @test "service: default port names" {

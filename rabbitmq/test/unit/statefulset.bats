@@ -142,38 +142,14 @@ load _helpers
 
   local match_key=$(echo "${affinity}" | yq r - \
   "${pod_anti_affinity}[0].labelSelector.matchExpressions[0].key")
-  [ "${match_key}" == "statefulset" ]
+  [ "${match_key}" == "app.kubernetes.io/name" ]
 
   local match_values=$(echo "${affinity}" | yq r - \
   "${pod_anti_affinity}[0].labelSelector.matchExpressions[0].values[0]")
-  [ "${match_values}" == "redhat-cop" ]
+  [ "${match_values}" == "$(name_prefix)" ]
 
   local topology_key=$(echo "${affinity}" | yq r - "${pod_anti_affinity}[0].topologyKey")
   [ "${topology_key}" == "kubernetes.io/hostname" ]
-}
-
-@test "statefulset: custom affinity" {
-  cd $(chart_dir)
-  local affinity=$(helm template -s templates/deployment.yaml \
-  --set 'affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[0].labelSelector.matchExpressions[0].key=statefulset' \
-  --set 'affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[0].labelSelector.matchExpressions[0].values[0]=custom' \
-  --set 'affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[0].topologyKey=kubernetes.io/instance' \
-  . | yq r - 'spec.template.spec.affinity')
-  [ -n "${affinity}" ]
-
-  local pod_anti_affinity=$(echo "${affinity}" | yq r - -p p 'podAntiAffinity.*')
-  [ "${pod_anti_affinity}" == "podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution" ]
-
-  local match_key=$(echo "${affinity}" | yq r - \
-  "${pod_anti_affinity}[0].labelSelector.matchExpressions[0].key")
-  [ "${match_key}" == "statefulset" ]
-
-  local match_values=$(echo "${affinity}" | yq r - \
-  "${pod_anti_affinity}[0].labelSelector.matchExpressions[0].values[0]")
-  [ "${match_values}" == "custom" ]
-
-  local topology_key=$(echo "${affinity}" | yq r - "${pod_anti_affinity}[0].topologyKey")
-  [ "${topology_key}" == "kubernetes.io/instance" ]
 }
 
 # securityContext

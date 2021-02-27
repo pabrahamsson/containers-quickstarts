@@ -73,13 +73,5 @@ nodeSelector: {}
 
 tolerations: []
 
-affinity:
-  podAntiAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-            - key: statefulset
-              operator: In
-              values:
-                - redhat-cop
-        topologyKey: kubernetes.io/hostname
+antiAffinity:
+  enabled: true
