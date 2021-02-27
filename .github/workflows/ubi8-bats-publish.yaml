@@ -30,7 +30,7 @@ jobs:
               TAGS+=("git-${BASH_REMATCH[1]}")
           fi
           echo "${TAGS[*]}"
-      - name: Build and publish image to Quay
+      - name: Build image
         id: build_image
         uses: redhat-actions/buildah-build@v2
         with:
