@@ -45,6 +45,6 @@ jobs:
         with:
           image: ${{ steps.build_image.outputs.image }}
           tags: ${{ steps.build_image.outputs.tags }}
-          registry: ${{ secrets.REGISTRY_URI }}/${{ secrets.REGISTRY_REPOSITORY }}
+          registry: quay.io/pabrahamsson
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
