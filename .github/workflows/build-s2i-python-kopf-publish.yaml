@@ -18,7 +18,7 @@ jobs:
           then
             echo "exist=true" >> $GITHUB_OUTPUT
             echo "true or false: ${{ secrets.PUBLISH_IMAGE }}"
-            echo "${{ secrects.PUBLISH_IMAGE }}" | wc -c
+            echo "${{ secrets.PUBLISH_IMAGE }}" | wc -c
           fi
 
   publish:
