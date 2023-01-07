@@ -22,7 +22,7 @@ jobs:
           fi
 
   publish:
-    if: ${{ needs.publish-secret.outputs.exist }} == 'true'
+    if: needs.publish-secret.outputs.exist == 'true'
     needs: publish-secret
     env:
       CONTEXT_DIR: build-s2i-python-kopf
