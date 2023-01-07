@@ -15,9 +15,9 @@ jobs:
         id: check-publish
         run: |
           if [ -n ${{ secrets.PUBLISH_IMAGE }} ]; then
-            echo "exist=true" >> $GITHUB_OUTPOUT
+            echo "exist=true" >> $GITHUB_OUTPUT
           else
-            echo "exist=false" >> $GITHUB_OUTPOUT
+            echo "exist=false" >> $GITHUB_OUTPUT
           fi
 
   publish:
