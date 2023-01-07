@@ -8,6 +8,7 @@ on:
       - .github/workflows/ubi8-asciidoctor-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: utilities/ubi8-asciidoctor
       image_name: ubi8-asciidoctor
