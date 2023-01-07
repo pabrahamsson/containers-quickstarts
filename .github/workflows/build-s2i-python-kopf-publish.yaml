@@ -16,6 +16,8 @@ jobs:
         run: |
           if [ ! -z "${{ secrets.PUBLISH_IMAGE }}" ]; then
             echo "exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "exist=false" >> $GITHUB_OUTPUT
           fi
 
   publish:
