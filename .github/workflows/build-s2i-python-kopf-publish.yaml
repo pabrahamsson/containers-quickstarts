@@ -14,8 +14,9 @@ jobs:
       - name: Check if PUBLISH_IMAGE secret is set
         id: check-publish
         run: |
-          if [ -n ${{ secrets.PUBLISH_IMAGE }} ]; then
+          if [ -n "${{ secrets.PUBLISH_IMAGE }}" ]; then
             echo "exist=true" >> $GITHUB_OUTPUT
+            echo "value: ${{ secrets.PUBLISH_IMAGE }}"
           else
             echo "exist=false" >> $GITHUB_OUTPUT
           fi
