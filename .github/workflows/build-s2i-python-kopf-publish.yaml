@@ -17,6 +17,8 @@ jobs:
           if [ -n "${{ secrets.PUBLISH_IMAGE }}" ]
           then
             echo "exist=true" >> $GITHUB_OUTPUT
+            echo "true or false: ${{ secrets.PUBLISH_IMAGE }}"
+            echo "GO: $GITHUB_OUTPUT"
           fi
 
   publish:
