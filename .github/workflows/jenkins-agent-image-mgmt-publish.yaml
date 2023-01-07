@@ -6,6 +6,7 @@ on:
       - .github/workflows/jenkins-agent-image-mgmt-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: jenkins-agents/jenkins-agent-image-mgmt
       image_name: jenkins-agent-image-mgmt

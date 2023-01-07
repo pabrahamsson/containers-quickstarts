@@ -6,6 +6,7 @@ on:
       - .github/workflows/ubi7-gitlab-runner-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: ubi7-gitlab-runner
       image_name: ubi7-gitlab-runner

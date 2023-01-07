@@ -6,6 +6,7 @@ on:
       - .github/workflows/ubi8-git-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: utilities/ubi8-git
       image_name: ubi8-git

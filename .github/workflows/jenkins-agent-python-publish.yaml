@@ -6,6 +6,7 @@ on:
       - .github/workflows/jenkins-agent-python-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: jenkins-agents/jenkins-agent-python
       image_name: jenkins-agent-python

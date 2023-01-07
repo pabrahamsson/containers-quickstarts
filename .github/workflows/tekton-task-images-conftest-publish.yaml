@@ -6,6 +6,7 @@ on:
       - .github/workflows/tekton-task-images-conftest-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: tekton-task-images/conftest
       image_name: tekton-task-conftest

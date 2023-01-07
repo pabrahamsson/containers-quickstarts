@@ -6,6 +6,7 @@ on:
       - .github/workflows/rabbitmq-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: rabbitmq
       image_name: rabbitmq

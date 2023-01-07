@@ -6,6 +6,7 @@ on:
       - .github/workflows/tekton-task-images-helm-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       context: tekton-task-images/helm
       image_name: tekton-task-helm

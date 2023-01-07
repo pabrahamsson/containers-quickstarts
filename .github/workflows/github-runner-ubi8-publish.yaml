@@ -7,6 +7,7 @@ on:
       - .github/workflows/github-runner-ubi8-publish.yaml
 jobs:
   build:
+    if: github.repository == 'redhat-cop/containers-quickstarts'
     env:
       CONTEXT_DIR: github-runner-ubi8
       IMAGE_NAME: github-runner-ubi8
