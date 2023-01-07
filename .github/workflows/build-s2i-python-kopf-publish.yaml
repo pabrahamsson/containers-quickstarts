@@ -7,7 +7,7 @@ on:
       - .github/workflows/build-s2i-python-kopf-publish.yaml
 jobs:
   publish:
-    if: github.repository == 'redhat-cop/containers-quickstarts' || secrets.PUBLISH_IMAGE
+    if: (github.repository == 'redhat-cop/containers-quickstarts' || secrets.PUBLISH_IMAGE)
     env:
       CONTEXT_DIR: build-s2i-python-kopf
       IMAGE_NAME: python-kopf-s2i
