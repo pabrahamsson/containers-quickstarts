@@ -5,10 +5,6 @@ on:
     paths:
       - build-s2i-python-kopf/version.json
       - .github/workflows/build-s2i-python-kopf-publish.yaml
-
-env:
-  PUBLISH: ${{ github.repository == 'redhat-cop/containers-quickstarts'
-
 jobs:
   publish-secret:
     runs-on: ubuntu-latest
