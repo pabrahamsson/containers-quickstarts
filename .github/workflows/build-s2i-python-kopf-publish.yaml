@@ -5,6 +5,10 @@ on:
     paths:
       - build-s2i-python-kopf/version.json
       - .github/workflows/build-s2i-python-kopf-publish.yaml
+
+env:
+  PUBLISH: ${{ github.repository == 'redhat-cop/containers-quickstarts'
+
 jobs:
   publish-secret:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
       - name: Check if PUBLISH_IMAGE secret is set
         id: check-publish
         run: |
-          if [ -n "${{ secrets.PUBLISH_IMAGE }}" ]
+          if [ ! -z "${{ secrets.PUBLISH_IMAGE }}" ]
           then
             echo "exist=true" >> $GITHUB_OUTPUT
             echo "true or false: ${{ secrets.PUBLISH_IMAGE }}"
