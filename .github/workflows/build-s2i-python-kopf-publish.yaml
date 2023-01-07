@@ -6,8 +6,20 @@ on:
       - build-s2i-python-kopf/version.json
       - .github/workflows/build-s2i-python-kopf-publish.yaml
 jobs:
+  publish-secret:
+    runs-on: ubuntu-latest
+    outputs:
+      exist: ${{ steps.check-publish.outputs.exist }}
+    steps:
+      - name: Check if PUBLISH_IMAGE secret is set
+        id: check-publish
+        run: |
+          if [ ! -z "${{ secrets.PUBLISH_IMAGE }}" ]; then
+            echo "exist=true" >> $GITHUB_OUTPUT
+          fi
+
   publish:
-    if: (github.repository == 'redhat-cop/containers-quickstarts' || ${{ secrets.PUBLISH_IMAGE }})
+    if: (github.repository == 'redhat-cop/containers-quickstarts' || ${{ needs.publish-secret.outputs.exist }})
     env:
       CONTEXT_DIR: build-s2i-python-kopf
       IMAGE_NAME: python-kopf-s2i
