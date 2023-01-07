@@ -14,8 +14,11 @@ jobs:
       - name: Check if PUBLISH_IMAGE secret is set
         id: check-publish
         run: |
-          if [ ! -z "${{ secrets.PUBLISH_IMAGE }}" ]; then
-            echo "::set-output name=exist::true"
+          if [[ -n ${{ secrets.PUBLISH_IMAGE }} ]]
+          then
+            echo "exist=true" >> $GITHUB_OUTPOUT
+          else
+            echo "exist=false" >> $GITHUB_OUTPOUT
           fi
 
   publish:
@@ -27,6 +30,9 @@ jobs:
       REGISTRY: ${{ secrets.REGISTRY_URI }}
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo "true or false: ${{ needs.publish-secret.outputs.exist }}"
+
       - uses: actions/checkout@v3
 
       - name: Get image tags
