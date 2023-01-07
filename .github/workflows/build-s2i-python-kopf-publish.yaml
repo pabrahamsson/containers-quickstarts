@@ -15,13 +15,14 @@ jobs:
         id: check-publish
         run: |
           if [ ! -z "${{ secrets.PUBLISH_IMAGE }}" ]; then
-            echo "exist=true" >> $GITHUB_OUTPUT
+            echo "::set-output name=exist::true"
           else
-            echo "exist=false" >> $GITHUB_OUTPUT
+            echo "::set-output name=exist::false"
           fi
 
   publish:
     if: (github.repository == 'redhat-cop/containers-quickstarts' || ${{ needs.publish-secret.outputs.exist }})
+    needs: publish-secret
     env:
       CONTEXT_DIR: build-s2i-python-kopf
       IMAGE_NAME: python-kopf-s2i
